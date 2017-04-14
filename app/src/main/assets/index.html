@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lan="eng">
+<head>
+<title>Survey JSON</title>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script src="./surveyjs/survey.jquery.min.js"></script>
+<script src="./surveyjs/survey.jquery.js"></script>
+ <link href="./css/bootstrap.min.css" rel="stylesheet">
+ <script src="./js/bootstrap.min.js"></script>
+ <link href="./surveyjs/styles.css" rel="stylesheet">
+</head>
+
+
+
+
+  <script>
+
+
+$(document).ready(function(){
+Survey.Survey.cssType = "bootstrap";
+var survey = new Survey.Model({
+ pages: [
+  {
+   name: "page1",
+   questions: [
+    {
+     type: "text",
+     inputType: "number",
+     isRequired: true,
+     name: "Total number of Sponsered Children?",
+	   validators: [
+      {
+       type: "numeric",
+       maxValue: "99999999",
+       minValue: "0",
+       text: "Please enter valid reponse"
+      }
+     ]
+    },
+    {
+     type: "radiogroup",
+     choices: [
+      {
+       value: "1",
+       text: "Male"
+      },
+      {
+       value: "2",
+       text: "Female"
+      }
+     ],
+     isRequired: true,
+     name: "Gender?"
+    }
+   ]
+  },
+  {
+   name: "page2",
+   questions: [
+    {
+     type: "text",
+     isRequired: true,
+     name: "No of Sponsered Child noticeably pregnant?"
+    }
+   ]
+  },
+  {
+   name: "page3",
+   questions: [
+    {
+     type: "checkbox",
+     choices: [
+      {
+       value: "1",
+       text: "Moore"
+      },
+      {
+       value: "2",
+       text: "Dioula"
+      },
+      {
+       value: "3",
+       text: "Dagara"
+      },
+      {
+       value: "4",
+       text: "Others"
+      }
+     ],
+     name: "What language does the family speak at home?"
+    }
+   ]
+  },
+  {
+   name: "page4",
+   questions: [
+    {
+     type: "radiogroup",
+     choices: [
+      {
+       value: "1",
+       text: "Registered and documents shown"
+      },
+      {
+       value: "2",
+       text: "Registered but no documents shown"
+      },
+      {
+       value: "3",
+       text: "Not registered"
+      },
+      {
+       value: "4",
+       text: "Don't Know"
+      }
+     ],
+     name: "What is the religion of the SC?"
+    }
+   ]
+  },
+  {
+   name: "page5",
+   questions: [
+    {
+     type: "radiogroup",
+     choices: [
+      {
+       value: "1",
+       text: "Registered and documents shown"
+      },
+      {
+       value: "2",
+       text: "Registered but no documents shown"
+      },
+      {
+       value: "3",
+       text: "Not registered"
+      },
+      {
+       value: "4",
+       text: "Don't Know"
+      }
+     ],
+     name: "Has the SCs birth been registered and is there supporting documentation?"
+    },
+    {
+     type: "radiogroup",
+     choices: [
+      {
+       value: "1",
+       text: "Cost too much"
+      },
+      {
+       value: "2",
+       text: "Must travel too far"
+      },
+      {
+       value: "3",
+       text: "Did not know should be registered"
+      },
+      {
+       value: "4",
+       text: "Late and did not want to pay the fine"
+      },
+      {
+       value: "5",
+       text: "Does not know where to register"
+      },
+      {
+       value: "6",
+       text: "Does not understand the process of registering a child"
+      },
+      {
+       value: "7",
+       text: "Others"
+      }
+     ],
+     name: "If not registered, why is the SCs birth not registered?"
+    }
+   ]
+  },
+  {
+   name: "page6",
+   questions: [
+    {
+     type: "radiogroup",
+     choices: [
+      {
+       value: "1",
+       text: "Yes"
+      },
+      {
+       value: "2",
+       text: "No"
+      }
+     ],
+     name: "Is the SC living in the same household as 12 months ago?"
+    }
+   ]
+  },
+  {
+   name: "page7",
+   questions: [
+    {
+     type: "radiogroup",
+     choices: [
+      {
+       value: "1",
+       text: "Left to seek employment"
+      },
+      {
+       value: "2",
+       text: "To live with relatives"
+      },
+      {
+       value: "3",
+       text: "For more fertile land"
+      },
+      {
+       value: "4",
+       text: "Unknown"
+      },
+      {
+       value: "5",
+       text: "Both died (SC Orphan)"
+      }
+     ],
+     name: "If mother and father are not living with the SC, what is the reason?"
+    }
+   ]
+  },
+  {
+   name: "page8",
+   questions: [
+    {
+     type: "rating",
+     maximumRateDescription: "Excellent",
+     mininumRateDescription: "Not Well",
+     name: "Does your parent treats you well?"
+    }
+   ]
+  }
+ ]
+});
+
+
+survey.showProgressBar = "bottom";
+
+var myCss = {
+        matrix: {root: "table table-striped"},
+        navigationButton: "btn btn-primary",
+		question: {title: "h4"},
+   };
+   
+   
+
+$("#surveyContainer").Survey({
+    model: survey,
+    css: myCss,
+	onComplete:sendDataToServer
+});
+
+function sendDataToServer(survey) {
+  var resultAsString = JSON.stringify(survey.data);
+  alert(resultAsString); //send Ajax request to your web server.
+}
+
+});
+
+
+</script>
+ 
+
+
+<body style="background-color:#F3F3F4;">
+
+
+
+	<div id="surveyContainer"></div>
+
+
+
+
+</body>
+
+</html>
